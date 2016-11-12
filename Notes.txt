@@ -1,0 +1,195 @@
+﻿Creational (5/5):
+
+- Abstract Factory
+- Builder
+- Factory
+- Prototype
+- Singleton
+
+Structural (2/7):
+
+- Adapter
+- Bridge
+[] Composite
+[] Decorator
+[] Facade
+[] Flyweight
+[] Proxy
+
+Behavioral (0/11):
+
+[] Chain of Responsibility
+[] Command
+[] Interpreter
+[] Iterator
+[] Mediator
+[] Memento
+[] Observer
+[] State
+[] Strategy
+[] Template
+[] Visitor
+
+
+
+
+
+Design Patterns Video Course Notes
+----------------------------------
+
+3 main types of design pattern: Creational, Structural and Behavioral.
+
+Design Patterns don't describe classes, only the relationships/interactions between classes.
+
+Smaller in scope than architectural patterns, for example MVC is a architectural pattern while "Singleton" is a design pattern.
+
+In general, implementing design patterns may result in unnecessary complexity, so good decisions need to
+be made in each case whether to use them or stick to "simpler" implementations.
+
+Abstract Factory Pattern (https://en.wikipedia.org/wiki/Abstract_factory_pattern)
+------------------------
+
+Problem
+-------
+
+You have a group of concrete classes with similar functionality. The client code needs to be able to use
+any of them depending on the context. If the client code interacts directly with the concrete classes, the code
+can become hard to maintain.
+
+Real-world examples:
+
+Interacting with different database servers
+Receiving input from different devices
+Outputting to different file formats
+
+Solution
+--------
+
+Provide a generalized interface which hides the concrete classes from the rest of the application.
+
+Example:
+
+"Database" abstract class with multiple concrete classes that inherit from it (Sql, Oracle, OleDb, mySQL).
+The abstract class exposes the generic members (connection, command) and you can control in 1 place which
+of the concrete classes is used. 
+
+The benefits of this pattern increase the more the concrete classes are used, and the more chance of new concrete
+classes needing to be added in future. If you don't use the pattern, you bog down the code with switch statements.
+It also takes just a couple of extra lines to add a new concrete class as opposed to making the change anywhere
+the group of classes are used.
+
+Can be implemented as either an abstract class or an interface.
+
+
+
+Builder Pattern (https://en.wikipedia.org/wiki/Builder_pattern)
+---------------
+
+Problem
+-------
+
+You have an object with many parameters and ways to construct it. This can quickly devolve to having 10+ constructors all taking
+different permutations of parameters. This is known as the "telescoping constructor" anti-pattern.
+
+Another problem is bogging down the code with the same object initialization steps. For example setting your connections to have some
+fixed timeout value.
+
+Solution
+--------
+
+Create a "Director" which constructs the object and returns it back to you. This pattern can be used with the abstract factory pattern to
+have the Director receive an abstract type instead of a concrete type.
+
+
+
+Factory Method Pattern (https://en.wikipedia.org/wiki/Factory_method_pattern)
+---------------
+
+Problem
+-------
+
+You have lots of duplicate object creation/instantiation code and/or you want to create an object from a family of classes (depending on config) but
+not necessarily any one specific concrete class.
+
+Solution
+--------
+
+A factory method allows you to encapsulate common object creation code and also allows the client to not need to know the specific type of object
+it wants, you only need to pass in some parameter or it could even be decided completely by the factory method, reading from a config file for example.
+
+
+
+WHAT'S THE DIFFERENCE BETWEEN BUILDER AND FACTORY METHOD? (http://stackoverflow.com/a/8959150)
+
+A factory method is a wrapper around a constructor, the object should be built in a single line.
+A builder method is more granular and prevents telescoping constructor problem.
+
+
+Prototype Pattern (https://en.wikipedia.org/wiki/Prototype_pattern)
+-----------------
+
+Problem
+-------
+
+You need to make copies of objects in your code. Objects are reference types so declaring a new instance and assigning an existing
+object won't work if you need to make modifications to the clone. The code required to clone an object is quite verbose and you dont
+want to repeat this all over your code base, so you can use the prototype pattern to solve this.
+
+There is "shallow copy" and "deep copy". Shallow copy uses MemberwiseClone, references to object properties are copied so only value types
+can be safe to be modified. Changes to the clone makes changes to the original. Very bug prone.
+
+Deep copy copies values of all properties, including properties of sub-objects.
+
+Solution
+--------
+
+Implement ICloneable on a class and implement a proper deep-copy Clone() method
+
+
+Singleton Pattern (https://en.wikipedia.org/wiki/Singleton_pattern)
+-----------------
+
+Problem
+-------
+
+Your app needs a single instance of an object throughout. For exception logging, DB/business layer manager, hardware access.
+
+Solution
+--------
+
+Singletons are preferred to global state because they allow lazy-loading, though care should be taken if using lazy-loading to
+make it thread safe incase the property is accessed for the "first time" at the same time by more than 1 caller.
+
+
+
+Adapter Pattern ()
+
+Problem
+-------
+
+You have an object that needs convering to a different type, a data transfer object to a business object.
+
+Solution
+--------
+
+Provide an interface for the application to use. Adapter class does the conversion.
+
+
+Bridge Pattern ()
+
+Problem
+-------
+
+You want to decouple the application from a feature implementation. The bridge in between the 2 classes will decouple them so that either of them can change
+without impacting the others. It only would impact the bridge class.
+
+Solution
+--------
+
+Decouple an abstraction from its implementation. Provides an abstract class or interface. Abstraction class used by application.
+Features implemented as concentre implementation of abstract class. User of the abstraction doesn't need to know too much about
+all the various concrete classes that exist, for example.
+
+It's an extra class between application and the abstraction.
+
+
