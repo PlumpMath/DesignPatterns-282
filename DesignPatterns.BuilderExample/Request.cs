@@ -15,12 +15,15 @@ namespace DesignPatterns.BuilderExample
 
             printBuilder.Append(string.Format("URL: {0}", Url));
 
+            if (Headers.Count > 0)
+                printBuilder.Append("\nHeaders:");
+
             foreach (var header in Headers)
             {
-                printBuilder.Append(string.Format("\nHeader: {0} : {1}", header.Key, header.Value));
+                printBuilder.Append(string.Format("\n\t{0} : {1}", header.Key, header.Value));
             }
 
-            printBuilder.Append(string.Format("\nBody: {0}\n", Body));
+            printBuilder.Append(string.Format("\n\nBody: {0}\n", Body));
 
             return printBuilder.ToString();
         }
